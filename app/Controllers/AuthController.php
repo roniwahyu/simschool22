@@ -4,25 +4,33 @@ namespace App\Controllers;
 
 use CodeIgniter\Controller;
 
-class AuthController extends Controller
+class AuthController extends BaseController
 {
     public function login()
     {
-        return view('auth/login');
+        return $this->render('auth/login', [
+            'title' => 'Login'
+        ]);
     }
 
     public function register()
     {
-        return view('auth/register');
+        return $this->render('auth/register', [
+            'title' => 'Register'
+        ]);
     }
 
     public function forgotPassword()
     {
-        return view('auth/forgot-password');
+        return $this->render('auth/forgot-password', [
+            'title' => 'Forgot Password'
+        ]);
     }
 
     public function resetPassword()
     {
-        return  view('auth/reset-password');
+        return $this->render('auth/reset-password', [
+            'title' => 'Reset Password'
+        ]);
     }
 }

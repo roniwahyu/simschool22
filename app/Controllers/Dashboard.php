@@ -33,7 +33,7 @@ class Dashboard extends BaseController
             'stats' => $this->getStatistics(),
         ];
 
-        return $this->render('dashboard/index', $data);
+        return $this->render('dashboard/index', $data,'template/main');
     }
 
     public function getStats()

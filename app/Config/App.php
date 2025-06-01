@@ -40,7 +40,7 @@ class App extends BaseConfig
      * something else. If you have configured your web server to remove this file
      * from your site URIs, set this variable to an empty string.
      */
-    public string $indexPage = 'index.php';
+    public string $indexPage = '';
 
     /**
      * --------------------------------------------------------------------------
@@ -133,7 +133,7 @@ class App extends BaseConfig
      * @see https://www.php.net/manual/en/timezones.php for list of timezones
      *      supported by PHP.
      */
-    public string $appTimezone = 'UTC';
+    public string $appTimezone = 'Asia/Jakarta';
 
     /**
      * --------------------------------------------------------------------------
@@ -158,7 +158,187 @@ class App extends BaseConfig
      * and the HTTP Strict Transport Security (HSTS) header will be set.
      */
     public bool $forceGlobalSecureRequests = false;
+    /**
+     * --------------------------------------------------------------------------
+     * Session Driver
+     * --------------------------------------------------------------------------
+     *
+     * The session storage driver to use:
+     * - `CodeIgniter\Session\Handlers\FileHandler`
+     * - `CodeIgniter\Session\Handlers\DatabaseHandler`
+     * - `CodeIgniter\Session\Handlers\MemcachedHandler`
+     * - `CodeIgniter\Session\Handlers\RedisHandler`
+     */
+    public string $sessionDriver = 'CodeIgniter\Session\Handlers\FileHandler';
 
+    /**
+     * --------------------------------------------------------------------------
+     * Session Cookie Name
+     * --------------------------------------------------------------------------
+     *
+     * The session cookie name, must contain only [0-9a-z_-] characters
+     */
+    public string $sessionCookieName = 'smartschool_session';
+
+    /**
+     * --------------------------------------------------------------------------
+     * Session Expiration
+     * --------------------------------------------------------------------------
+     *
+     * The number of SECONDS you want the session to last.
+     * Setting to 0 (zero) means expire when the browser is closed.
+     */
+    public int $sessionExpiration = 7200;
+
+    /**
+     * --------------------------------------------------------------------------
+     * Session Save Path
+     * --------------------------------------------------------------------------
+     *
+     * The location to save sessions to and is driver dependent.
+     * For the 'files' driver, it's a path to a writable directory.
+     * WARNING: Only absolute paths are supported!
+     *
+     * For the 'database' driver, it's a table name.
+     * Please read up the manual for the format with other session drivers.
+     *
+     * IMPORTANT: You are REQUIRED to set a valid save path!
+     */
+    public ?string $sessionSavePath = null;
+
+    /**
+     * --------------------------------------------------------------------------
+     * Session Match IP
+     * --------------------------------------------------------------------------
+     *
+     * Whether to match the user's IP address when reading the session data.
+     *
+     * WARNING: If you're using the database driver, don't forget to update
+     *          your session table's PRIMARY KEY when changing this setting.
+     */
+    public bool $sessionMatchIP = false;
+
+    /**
+     * --------------------------------------------------------------------------
+     * Session Time to Update
+     * --------------------------------------------------------------------------
+     *
+     * How many seconds between CI regenerating the session ID.
+     */
+    public int $sessionTimeToUpdate = 300;
+
+    /**
+     * --------------------------------------------------------------------------
+     * Session Regenerate Destroy
+     * --------------------------------------------------------------------------
+     *
+     * Whether to destroy session data associated with the old session ID
+     * when auto-regenerating the session ID. When set to FALSE, the data
+     * will be later deleted by the garbage collector.
+     */
+    public bool $sessionRegenerateDestroy = false;
+
+    /**
+     * --------------------------------------------------------------------------
+     * Cookie Related Variables
+     * --------------------------------------------------------------------------
+     *
+     * 'cookiePrefix'   = Set a cookie name prefix if you need to avoid collisions.
+     * 'cookieDomain'   = Set to .your-domain.com for site-wide cookies.
+     * 'cookiePath'     = Typically will be a forward slash.
+     * 'cookieSecure'   = Cookie will only be set if a secure HTTPS connection exists.
+     * 'cookieHTTPOnly' = Cookie will only be accessible via HTTP(S) (no JavaScript).
+     * 'cookieSameSite' = Cookie's SameSite attribute (None, Lax, Strict or '').
+     *
+     * Alternatively, you can set Environment variables:
+     * - `Cookie.prefix`
+     * - `Cookie.domain`
+     * - `Cookie.path`
+     * - `Cookie.secure`
+     * - `Cookie.httponly`
+     * - `Cookie.samesite`
+     *
+     * @var array<string, string|bool>
+     */
+    public string $cookiePrefix         = '';
+    public string $cookieDomain         = '';
+    public string $cookiePath           = '/';
+    public bool $cookieSecure         = false;
+    public bool $cookieHTTPOnly       = false;
+    public string $cookieSameSite       = 'Lax';
+
+    /**
+     * --------------------------------------------------------------------------
+     * CSRF Token Names
+     * --------------------------------------------------------------------------
+     *
+     * The token name.
+     */
+    public string $CSRFTokenName = 'csrf_test_name';
+
+    /**
+     * --------------------------------------------------------------------------
+     * CSRF Header Names
+     * --------------------------------------------------------------------------
+     *
+     * The header name.
+     */
+    public string $CSRFHeaderName = 'X-CSRF-TOKEN';
+
+    /**
+     * --------------------------------------------------------------------------
+     * CSRF Cookie Names
+     * --------------------------------------------------------------------------
+     *
+     * The cookie name.
+     */
+    public string $CSRFCookieName = 'csrf_cookie_name';
+
+    /**
+     * --------------------------------------------------------------------------
+     * CSRF Expires
+     * --------------------------------------------------------------------------
+     *
+     * The number in seconds the token should expire.
+     */
+    public int $CSRFExpiration = 7200;
+
+    /**
+     * --------------------------------------------------------------------------
+     * CSRF Regenerate cookie
+     * --------------------------------------------------------------------------
+     *
+     * Regenerate token on every submission?
+     */
+    public bool $CSRFRegenerate = true;
+
+    /**
+     * --------------------------------------------------------------------------
+     * CSRF Exclude URIs
+     * --------------------------------------------------------------------------
+     *
+     * List of URIs which ignore CSRF protection
+     * (for example API endpoints expecting externally POSTed content)
+     *
+     * @var string[]
+     * @phpstan-var list<string>
+     */
+    public array $CSRFExcludeURIs = [];
+
+    /**
+     * --------------------------------------------------------------------------
+     * CSRF SameSite
+     * --------------------------------------------------------------------------
+     *
+     * Setting for CSRF SameSite cookie token. Allowed values are:
+     * None|Lax|Strict|''
+     *
+     * Defaults to `Lax` as recommended in this link:
+     *
+     * @see https://portswigger.net/web-security/csrf/samesite-cookies
+     */
+    public string $CSRFSameSite = 'Lax';
+    
     /**
      * --------------------------------------------------------------------------
      * Reverse Proxy IPs

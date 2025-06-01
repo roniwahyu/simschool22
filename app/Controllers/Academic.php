@@ -29,7 +29,9 @@ class Academic extends BaseController
             'total_subjects' => $this->subjectModel->countAll(),
         ];
 
-        return $this->render('academic/index', $data);
+        // return $this->render('academic/index', $data);
+        return $this->render('academic/index', $data,'template/main');
+
     }
 
     public function sessions()
@@ -101,11 +103,9 @@ class Academic extends BaseController
     }
 
     public function subjects()
-    {
-        if ($this->isAjax()) {
+    {        if ($this->isAjax()) {
             $subjects = $this->subjectModel
-                ->select('subjects.*, subject_groups.name as group_name')
-                ->join('subject_groups', 'subject_groups.id = subjects.subject_group_id', 'left')
+                ->select('subjects.*')
                 ->orderBy('subjects.name', 'ASC')
                 ->findAll();
             return $this->sendSuccess($subjects);
@@ -113,16 +113,16 @@ class Academic extends BaseController
 
         $data = [
             'page_title' => 'Subject Management',
-            'breadcrumb' => ['Dashboard' => '/', 'Academic' => '/academic', 'Subjects'],
-            'subjects' => $this->subjectModel
-                ->select('subjects.*, subject_groups.name as group_name')
-                ->join('subject_groups', 'subject_groups.id = subjects.subject_group_id', 'left')
+            'breadcrumb' => ['Dashboard' => '/', 'Academic' => '/academic', 'Subjects'],            'subjects' => $this->subjectModel
+                ->select('subjects.*')
                 ->orderBy('subjects.name', 'ASC')
                 ->findAll(),
             'classes' => $this->classModel->where('is_active', 'yes')->findAll(),
         ];
 
-        return $this->render('academic/subjects', $data);
+        // return $this->render('academic/subjects', $data);
+        return $this->render('academic/subjects', $data,'template/main');
+
     }
 
     public function storeSubjects()

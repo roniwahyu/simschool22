@@ -1,34 +1,64 @@
-<?= $this->extend('template/default') ?>
+<?= $this->extend('template/auth') ?>
 
 <?= $this->section('content') ?>
-<div class="max-w-md mx-auto bg-white rounded-lg shadow-md overflow-hidden md:max-w-lg">
-    <div class="md:flex">
-        <div class="w-full p-4">
-            <div class="text-center">
-                <h1 class="text-2xl font-bold text-gray-800">Login</h1>
-                <p class="text-gray-600">Enter your credentials to access your account</p>
+<div class="min-h-screen flex items-center justify-center">
+    <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+        <h2 class="text-2xl font-bold text-center text-gray-800 mb-2">Login</h2>
+        <p class="text-gray-600 text-center mb-6">Enter your credentials to access your account</p>
+        
+        <?= form_open('auth/login', ['class' => 'space-y-6']) ?>
+            <?= csrf_field() ?>
+            
+            <?php if (session()->getFlashdata('error')): ?>
+                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+                    <?= session()->getFlashdata('error') ?>
+                </div>
+            <?php endif; ?>
+
+            <div>
+                <label for="email" class="block text-sm font-medium text-gray-700">Email Address</label>
+                <input type="email" name="email" id="email" required 
+                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                    placeholder="Enter your email">
             </div>
-            <form action="/login" method="post" class="mt-6">
-                <div class="mb-4">
-                    <label for="email" class="block text-gray-700 text-sm font-bold mb-2">Email</label>
-                    <input type="email" name="email" id="email" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Enter your email" required>
+
+            <div>
+                <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+                <input type="password" name="password" id="password" required 
+                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                    placeholder="Enter your password">
+            </div>
+
+            <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                    <input type="checkbox" name="remember" id="remember" 
+                        class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
+                    <label for="remember" class="ml-2 block text-sm text-gray-900">
+                        Remember me
+                    </label>
                 </div>
-                <div class="mb-6">
-                    <label for="password" class="block text-gray-700 text-sm font-bold mb-2">Password</label>
-                    <input type="password" name="password" id="password" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Enter your password" required>
-                </div>
-                <div class="flex items-center justify-between">
-                    <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-                        Sign In
-                    </button>
-                    <a href="/forgot-password" class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">
-                        Forgot Password?
+
+                <div class="text-sm">
+                    <a href="/forgot-password" class="font-medium text-blue-600 hover:text-blue-500">
+                        Forgot password?
                     </a>
                 </div>
-            </form>
-            <div class="mt-4 text-center">
-                <p class="text-gray-600">Don't have an account? <a href="/register" class="text-blue-500 hover:text-blue-800">Register here</a></p>
             </div>
+
+            <div>
+                <button type="submit" 
+                    class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                    Sign in
+                </button>
+            </div>
+
+            <div class="text-sm text-center">
+                Don't have an account? 
+                <a href="/register" class="font-medium text-blue-600 hover:text-blue-500">
+                    Register here
+                </a>
+            </div>
+        <?= form_close() ?>
         </div>
     </div>
 </div>
