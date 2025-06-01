@@ -48,6 +48,13 @@ class Inspector extends BaseConfig
      */
     public int $maxItems = 100;
 
+    /**
+     * Routes to ignore from monitoring.
+     *
+     * @var array
+     */
+    public array $ignoreRoutes = [];
+
     public function __construct()
     {
         $this->ingestionKey = ENV('inspector.ingestionKey', '');
