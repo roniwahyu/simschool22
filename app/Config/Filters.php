@@ -72,10 +72,14 @@ class Filters extends BaseFilters
             // 'honeypot',
             // 'csrf',
             // 'invalidchars',
+            'inspector',
+
         ],
         'after' => [
             // 'honeypot',
             // 'secureheaders',
+            'inspector',
+
         ],
     ];
 
