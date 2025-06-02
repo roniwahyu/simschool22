@@ -1,39 +1,76 @@
-<?= $this->extend('template/auth') ?>
+<?= $this->extend('layouts/auth') ?>
 
 <?= $this->section('content') ?>
-<form action="/forgot-password" method="post" class="space-y-4">
-    <?= csrf_field() ?>
-
-    <?php if (session()->getFlashdata('error')): ?>
-        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
-            <?= session()->getFlashdata('error') ?>
+<div class="auth-form-container">
+    <div class="text-center mb-4">
+        <div class="auth-icon mb-3">
+            <i class="fas fa-key"></i>
         </div>
-    <?php endif; ?>
-
-    <?php if (session()->getFlashdata('success')): ?>
-        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded">
-            <?= session()->getFlashdata('success') ?>
-        </div>
-    <?php endif; ?>
-
-    <div>
-        <label for="email" class="block text-sm font-medium text-gray-700">Email Address</label>
-        <input type="email" name="email" id="email" required 
-            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-            placeholder="Enter your email">
+        <h3 class="mb-2">Forgot Password?</h3>
+        <p class="text-muted">No worries! Enter your email and we'll send you a reset link</p>
     </div>
-
-    <div>
-        <button type="submit" 
-            class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-            Reset Password
+    
+    <?= form_open('auth/forgot-password', ['class' => 'auth-form', 'id' => 'forgotPasswordForm']) ?>
+        <?= csrf_field() ?>
+        
+        <div class="form-group">
+            <label for="email" class="form-label">
+                <i class="fas fa-envelope me-2"></i>Email Address
+            </label>
+            <input type="email" name="email" id="email" class="form-control" 
+                   placeholder="Enter your registered email address" required 
+                   value="<?= old('email') ?>">
+            <small class="form-text text-muted">
+                Please provide a valid email address.
+            </small>
+        </div>
+        
+        <button type="submit" class="btn btn-primary w-100 mb-3">
+            <i class="fas fa-paper-plane me-2"></i>Send Reset Instructions
         </button>
-    </div>
+    <?= form_close() ?>
+</div>
 
-    <div class="text-sm text-center">
-        <a href="/login" class="font-medium text-blue-600 hover:text-blue-500">
-            Back to Login
-        </a>
-    </div>
-</form>
+<script type="text/babel">
+    function ForgotPasswordHandler() {
+        const handleFormSubmit = (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            
+            // Simulate API call
+            setTimeout(() => {
+                document.getElementById('emailStep').classList.add('d-none');
+                document.getElementById('successStep').classList.remove('d-none');
+                document.getElementById('sentToEmail').textContent = email;
+                
+                toastr.success('Reset instructions sent to your email!');
+            }, 1000);
+        };
+        
+        React.useEffect(() => {
+            const form = document.getElementById('forgotPasswordForm');
+            form.addEventListener('submit', handleFormSubmit);
+            
+            return () => {
+                form.removeEventListener('submit', handleFormSubmit);
+            };
+        }, []);
+        
+        return null;
+    }
+    
+    ReactDOM.render(<ForgotPasswordHandler />, document.createElement('div'));
+    
+    function backToEmail() {
+        document.getElementById('successStep').classList.add('d-none');
+        document.getElementById('emailStep').classList.remove('d-none');
+    }
+    
+    function resendResetEmail() {
+        toastr.info('Resending reset instructions...');
+        setTimeout(() => {
+            toastr.success('Reset instructions sent again!');
+        }, 2000);
+    }
+</script>
 <?= $this->endSection() ?>

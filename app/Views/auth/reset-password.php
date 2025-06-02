@@ -1,46 +1,51 @@
-<?= $this->extend('template/auth') ?>
+<?= $this->extend('layouts/auth') ?>
 
 <?= $this->section('content') ?>
-<form action="/reset-password" method="post" class="space-y-4">
-    <?= csrf_field() ?>
-
-    <?php if (session()->getFlashdata('error')): ?>
-        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
-            <?= session()->getFlashdata('error') ?>
+<div class="auth-form-container">
+    <div class="text-center mb-4">
+        <div class="reset-password-icon mb-3">
+            <i class="fas fa-shield-alt"></i>
         </div>
-    <?php endif; ?>
-
-    <?php if (session()->getFlashdata('success')): ?>
-        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded">
-            <?= session()->getFlashdata('success') ?>
+        <h3 class="auth-form-title">Reset Password</h3>
+        <p class="text-muted">Enter your new password below</p>
+    </div>
+    
+    <?= form_open('auth/reset-password', ['id' => 'resetPasswordForm', 'class' => 'auth-form']) ?>
+        <?= csrf_field() ?>
+        <input type="hidden" name="token" value="<?= $token ?? '' ?>">
+        
+        <div class="form-floating mb-3">
+            <input type="password" class="form-control" id="password" name="password" placeholder="New Password" required>
+            <label for="password"><i class="fas fa-lock me-2"></i>New Password</label>
+            <button type="button" class="password-toggle" onclick="togglePassword('password')">
+                <i class="fas fa-eye"></i>
+            </button>
         </div>
-    <?php endif; ?>
-
-    <div>
-        <label for="password" class="block text-sm font-medium text-gray-700">New Password</label>
-        <input type="password" name="password" id="password" required 
-            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-            placeholder="Enter your new password">
-    </div>
-
-    <div>
-        <label for="confirm_password" class="block text-sm font-medium text-gray-700">Confirm Password</label>
-        <input type="password" name="confirm_password" id="confirm_password" required 
-            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-            placeholder="Confirm your new password">
-    </div>
-
-    <div>
-        <button type="submit" 
-            class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-            Reset Password
+        
+        <div class="form-floating mb-3">
+            <input type="password" class="form-control" id="confirm_password" name="confirm_password" placeholder="Confirm Password" required>
+            <label for="confirm_password"><i class="fas fa-lock me-2"></i>Confirm Password</label>
+            <button type="button" class="password-toggle" onclick="togglePassword('confirm_password')">
+                <i class="fas fa-eye"></i>
+            </button>
+        </div>
+        
+        <div class="password-strength mb-3">
+            <div class="password-strength-bar">
+                <div class="strength-indicator" id="strengthIndicator"></div>
+            </div>
+            <small class="text-muted" id="strengthText">Password strength</small>
+        </div>
+        
+        <button type="submit" class="btn btn-primary btn-lg w-100 mb-3">
+            <i class="fas fa-check me-2"></i>Reset Password
         </button>
-    </div>
-
-    <div class="text-sm text-center">
-        <a href="/login" class="font-medium text-blue-600 hover:text-blue-500">
-            Back to Login
+    <?= form_close() ?>
+    
+    <div class="auth-footer text-center mt-4">
+        <a href="<?= base_url('auth/login') ?>" class="text-decoration-none">
+            <i class="fas fa-arrow-left me-2"></i>Back to Login
         </a>
     </div>
-</form>
+</div>
 <?= $this->endSection() ?>
